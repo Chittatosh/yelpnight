@@ -1,3 +1,10 @@
 {
-  "presets": ["env", "react"]
+  "env": {
+    "production": {
+      "presets": ["env", "react"]
+    },
+    "development": {
+      "presets": [["env", { "modules": false }], "react"]
+    }
+  }
 }

@@ -16,7 +16,7 @@ const server = new GraphQLServer({
       typeDefs: 'src/generated/prisma.graphql', // the Prisma DB schema
       endpoint: process.env.PRISMA_ENDPOINT, // the endpoint of the Prisma DB service
       secret: process.env.PRISMA_SECRET, // taken from database/prisma.yml
-      debug: true, // log all GraphQL queries & mutations
+      debug: false, // log all GraphQL queries & mutations
     }), // Values are set in .env
   }),
 });
@@ -28,6 +28,7 @@ const logreq = (req, next, color) => {
 const app = server.express;
 app.use((req, res, next) => logreq(req, next, '36'));
 app.use(express.static('dist'));
+
 app.get('/', (req, res) => res.send(htmlString));
 
 const options = {

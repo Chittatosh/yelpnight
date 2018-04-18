@@ -1,3 +1,5 @@
+const { jsUrl } = require('./utils');
+
 const htmlString = `<!doctype html>
   <html class="no-js" lang="en">
     <head>
@@ -13,7 +15,7 @@ const htmlString = `<!doctype html>
     </head>
     <body class="container">
       <div id="root">Root Element</div>
-      <script src="main.js"></script>
+      <script src="${jsUrl}"></script>
     </body>
     <footer>
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">

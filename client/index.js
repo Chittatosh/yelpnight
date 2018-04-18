@@ -6,13 +6,19 @@ import { ApolloProvider } from 'react-apollo';
 
 import App from '../components/App';
 
-// Pass your GraphQL endpoint to uri
+// Default endpoint { uri: '/graphql' }
 const client = new ApolloClient();
 
-const ApolloApp = AppComponent => (
-  <ApolloProvider client={client}>
-    <AppComponent />
-  </ApolloProvider>
-);
+const hotRender = () =>
+  render(
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>,
+    document.getElementById('root'),
+  );
 
-render(ApolloApp(App), document.getElementById('root'));
+hotRender();
+
+if (module.hot) {
+  module.hot.accept('../components/App', hotRender);
+}

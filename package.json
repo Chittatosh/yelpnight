@@ -2,17 +2,20 @@
   "name": "yelpnight",
   "version": "1.0.0",
   "description": "freeCodeCamp Nightlife Coordination App",
-  "main": "index.js",
+  "main": "src/index.js",
   "repository": "https://github.com/Chittatosh/yelpnight",
   "author": "Chittatosh Undirwade <chittatosh.u@gmail.com>",
   "license": "MIT",
   "scripts": {
     "start": "node src/index.js",
-    "build": "webpack --json > webpackStats.json",
-    "autorestart": "nodemon -e js,graphql -x node -r dotenv/config src",
-    "debug": "nodemon -e js,graphql -x node --inspect -r dotenv/config src/index.js",
+    "buildprod": "webpack",
+    "serverprod": "set NODE_ENV=production && node -r dotenv/config src",
+    "serverdev": "nodemon --watch src --inspect -r dotenv/config",
+    "clientdev": "webpack-dev-server --config ./client.webpack.config.js",
+    "fullstackdev": "npm-run-all --parallel serverdev clientdev",
     "playground": "graphql playground",
-    "dev": "npm-run-all --parallel autorestart playground"
+    "graphqldev": "npm-run-all --parallel serverdev playground",
+    "wpstats": "webpack --json > wpstats.json"
   },
   "dependencies": {
     "apollo-boost": "^0.1.4",
@@ -38,6 +41,7 @@
     "npm-run-all": "4.1.2",
     "prisma": "1.6.0",
     "webpack": "^4.5.0",
-    "webpack-cli": "^2.0.14"
+    "webpack-cli": "^2.0.14",
+    "webpack-dev-server": "^3.1.3"
   }
 }
