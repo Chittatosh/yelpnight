@@ -1,8 +1,8 @@
 dist
 package-lock.json
 node_modules
-wpstats.json
-todos.erl
+client/wpstats.json
+client/todos.erl
 .idea
 .vscode
 *.log

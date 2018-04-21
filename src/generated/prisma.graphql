@@ -5,14 +5,10 @@
 # Model Types
 #
 
-type Post implements Node {
+type Restaurant implements Node {
   id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  isPublished: Boolean!
-  title: String!
-  text: String!
-  author(where: UserWhereInput): User!
+  alias: String!
+  guestList(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
 }
 
 type User implements Node {
@@ -20,7 +16,7 @@ type User implements Node {
   email: String!
   password: String!
   name: String!
-  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
+  restaurantList(where: RestaurantWhereInput, orderBy: RestaurantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Restaurant!]
 }
 
 
@@ -28,7 +24,7 @@ type User implements Node {
 # Other Types
 #
 
-type AggregatePost {
+type AggregateRestaurant {
   count: Int!
 }
 
@@ -43,8 +39,6 @@ type BatchPayload {
   count: Long!
 }
 
-scalar DateTime
-
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
@@ -52,17 +46,17 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
-  createPost(data: PostCreateInput!): Post!
+  createRestaurant(data: RestaurantCreateInput!): Restaurant!
   createUser(data: UserCreateInput!): User!
-  updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
+  updateRestaurant(data: RestaurantUpdateInput!, where: RestaurantWhereUniqueInput!): Restaurant
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  deletePost(where: PostWhereUniqueInput!): Post
+  deleteRestaurant(where: RestaurantWhereUniqueInput!): Restaurant
   deleteUser(where: UserWhereUniqueInput!): User
-  upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
+  upsertRestaurant(where: RestaurantWhereUniqueInput!, create: RestaurantCreateInput!, update: RestaurantUpdateInput!): Restaurant!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  updateManyPosts(data: PostUpdateInput!, where: PostWhereInput): BatchPayload!
+  updateManyRestaurants(data: RestaurantUpdateInput!, where: RestaurantWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
-  deleteManyPosts(where: PostWhereInput): BatchPayload!
+  deleteManyRestaurants(where: RestaurantWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
 
@@ -104,10 +98,26 @@ type PageInfo {
   endCursor: String
 }
 
+type Query {
+  restaurants(where: RestaurantWhereInput, orderBy: RestaurantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Restaurant]!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  restaurant(where: RestaurantWhereUniqueInput!): Restaurant
+  user(where: UserWhereUniqueInput!): User
+  restaurantsConnection(where: RestaurantWhereInput, orderBy: RestaurantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RestaurantConnection!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  """
+  Fetches an object given its ID
+  """
+  node("""
+  The ID of an object
+  """
+  id: ID!): Node
+}
+
 """
 A connection to a list of items.
 """
-type PostConnection {
+type RestaurantConnection {
   """
   Information to aid in pagination.
   """
@@ -115,82 +125,70 @@ type PostConnection {
   """
   A list of edges.
   """
-  edges: [PostEdge]!
-  aggregate: AggregatePost!
+  edges: [RestaurantEdge]!
+  aggregate: AggregateRestaurant!
 }
 
-input PostCreateInput {
-  isPublished: Boolean
-  title: String!
-  text: String!
-  author: UserCreateOneWithoutPostsInput!
+input RestaurantCreateInput {
+  alias: String!
+  guestList: UserCreateManyWithoutRestaurantListInput
 }
 
-input PostCreateManyWithoutAuthorInput {
-  create: [PostCreateWithoutAuthorInput!]
-  connect: [PostWhereUniqueInput!]
+input RestaurantCreateManyWithoutGuestListInput {
+  create: [RestaurantCreateWithoutGuestListInput!]
+  connect: [RestaurantWhereUniqueInput!]
 }
 
-input PostCreateWithoutAuthorInput {
-  isPublished: Boolean
-  title: String!
-  text: String!
+input RestaurantCreateWithoutGuestListInput {
+  alias: String!
 }
 
 """
 An edge in a connection.
 """
-type PostEdge {
+type RestaurantEdge {
   """
   The item at the end of the edge.
   """
-  node: Post!
+  node: Restaurant!
   """
   A cursor for use in pagination.
   """
   cursor: String!
 }
 
-enum PostOrderByInput {
+enum RestaurantOrderByInput {
   id_ASC
   id_DESC
-  createdAt_ASC
-  createdAt_DESC
+  alias_ASC
+  alias_DESC
   updatedAt_ASC
   updatedAt_DESC
-  isPublished_ASC
-  isPublished_DESC
-  title_ASC
-  title_DESC
-  text_ASC
-  text_DESC
+  createdAt_ASC
+  createdAt_DESC
 }
 
-type PostPreviousValues {
+type RestaurantPreviousValues {
   id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  isPublished: Boolean!
-  title: String!
-  text: String!
+  alias: String!
 }
 
-type PostSubscriptionPayload {
+type RestaurantSubscriptionPayload {
   mutation: MutationType!
-  node: Post
+  node: Restaurant
   updatedFields: [String!]
-  previousValues: PostPreviousValues
+  previousValues: RestaurantPreviousValues
 }
 
-input PostSubscriptionWhereInput {
+input RestaurantSubscriptionWhereInput {
   """
   Logical AND on all given filters.
   """
-  AND: [PostSubscriptionWhereInput!]
+  AND: [RestaurantSubscriptionWhereInput!]
   """
   Logical OR on all given filters.
   """
-  OR: [PostSubscriptionWhereInput!]
+  OR: [RestaurantSubscriptionWhereInput!]
   """
   The subscription event gets dispatched when it's listed in mutation_in
   """
@@ -207,51 +205,47 @@ input PostSubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: PostWhereInput
+  node: RestaurantWhereInput
 }
 
-input PostUpdateInput {
-  isPublished: Boolean
-  title: String
-  text: String
-  author: UserUpdateOneWithoutPostsInput
+input RestaurantUpdateInput {
+  alias: String
+  guestList: UserUpdateManyWithoutRestaurantListInput
 }
 
-input PostUpdateManyWithoutAuthorInput {
-  create: [PostCreateWithoutAuthorInput!]
-  connect: [PostWhereUniqueInput!]
-  disconnect: [PostWhereUniqueInput!]
-  delete: [PostWhereUniqueInput!]
-  update: [PostUpdateWithWhereUniqueWithoutAuthorInput!]
-  upsert: [PostUpsertWithWhereUniqueWithoutAuthorInput!]
+input RestaurantUpdateManyWithoutGuestListInput {
+  create: [RestaurantCreateWithoutGuestListInput!]
+  connect: [RestaurantWhereUniqueInput!]
+  disconnect: [RestaurantWhereUniqueInput!]
+  delete: [RestaurantWhereUniqueInput!]
+  update: [RestaurantUpdateWithWhereUniqueWithoutGuestListInput!]
+  upsert: [RestaurantUpsertWithWhereUniqueWithoutGuestListInput!]
 }
 
-input PostUpdateWithoutAuthorDataInput {
-  isPublished: Boolean
-  title: String
-  text: String
+input RestaurantUpdateWithoutGuestListDataInput {
+  alias: String
 }
 
-input PostUpdateWithWhereUniqueWithoutAuthorInput {
-  where: PostWhereUniqueInput!
-  data: PostUpdateWithoutAuthorDataInput!
+input RestaurantUpdateWithWhereUniqueWithoutGuestListInput {
+  where: RestaurantWhereUniqueInput!
+  data: RestaurantUpdateWithoutGuestListDataInput!
 }
 
-input PostUpsertWithWhereUniqueWithoutAuthorInput {
-  where: PostWhereUniqueInput!
-  update: PostUpdateWithoutAuthorDataInput!
-  create: PostCreateWithoutAuthorInput!
+input RestaurantUpsertWithWhereUniqueWithoutGuestListInput {
+  where: RestaurantWhereUniqueInput!
+  update: RestaurantUpdateWithoutGuestListDataInput!
+  create: RestaurantCreateWithoutGuestListInput!
 }
 
-input PostWhereInput {
+input RestaurantWhereInput {
   """
   Logical AND on all given filters.
   """
-  AND: [PostWhereInput!]
+  AND: [RestaurantWhereInput!]
   """
   Logical OR on all given filters.
   """
-  OR: [PostWhereInput!]
+  OR: [RestaurantWhereInput!]
   id: ID
   """
   All values that are not equal to given value.
@@ -305,200 +299,71 @@ input PostWhereInput {
   All values not ending with the given string.
   """
   id_not_ends_with: ID
-  createdAt: DateTime
+  alias: String
   """
   All values that are not equal to given value.
   """
-  createdAt_not: DateTime
+  alias_not: String
   """
   All values that are contained in given list.
   """
-  createdAt_in: [DateTime!]
+  alias_in: [String!]
   """
   All values that are not contained in given list.
   """
-  createdAt_not_in: [DateTime!]
+  alias_not_in: [String!]
   """
   All values less than the given value.
   """
-  createdAt_lt: DateTime
+  alias_lt: String
   """
   All values less than or equal the given value.
   """
-  createdAt_lte: DateTime
+  alias_lte: String
   """
   All values greater than the given value.
   """
-  createdAt_gt: DateTime
+  alias_gt: String
   """
   All values greater than or equal the given value.
   """
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  """
-  All values that are not equal to given value.
-  """
-  updatedAt_not: DateTime
-  """
-  All values that are contained in given list.
-  """
-  updatedAt_in: [DateTime!]
-  """
-  All values that are not contained in given list.
-  """
-  updatedAt_not_in: [DateTime!]
-  """
-  All values less than the given value.
-  """
-  updatedAt_lt: DateTime
-  """
-  All values less than or equal the given value.
-  """
-  updatedAt_lte: DateTime
-  """
-  All values greater than the given value.
-  """
-  updatedAt_gt: DateTime
-  """
-  All values greater than or equal the given value.
-  """
-  updatedAt_gte: DateTime
-  isPublished: Boolean
-  """
-  All values that are not equal to given value.
-  """
-  isPublished_not: Boolean
-  title: String
-  """
-  All values that are not equal to given value.
-  """
-  title_not: String
-  """
-  All values that are contained in given list.
-  """
-  title_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
-  title_not_in: [String!]
-  """
-  All values less than the given value.
-  """
-  title_lt: String
-  """
-  All values less than or equal the given value.
-  """
-  title_lte: String
-  """
-  All values greater than the given value.
-  """
-  title_gt: String
-  """
-  All values greater than or equal the given value.
-  """
-  title_gte: String
+  alias_gte: String
   """
   All values containing the given string.
   """
-  title_contains: String
+  alias_contains: String
   """
   All values not containing the given string.
   """
-  title_not_contains: String
+  alias_not_contains: String
   """
   All values starting with the given string.
   """
-  title_starts_with: String
+  alias_starts_with: String
   """
   All values not starting with the given string.
   """
-  title_not_starts_with: String
+  alias_not_starts_with: String
   """
   All values ending with the given string.
   """
-  title_ends_with: String
+  alias_ends_with: String
   """
   All values not ending with the given string.
   """
-  title_not_ends_with: String
-  text: String
-  """
-  All values that are not equal to given value.
-  """
-  text_not: String
-  """
-  All values that are contained in given list.
-  """
-  text_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
-  text_not_in: [String!]
-  """
-  All values less than the given value.
-  """
-  text_lt: String
-  """
-  All values less than or equal the given value.
-  """
-  text_lte: String
-  """
-  All values greater than the given value.
-  """
-  text_gt: String
-  """
-  All values greater than or equal the given value.
-  """
-  text_gte: String
-  """
-  All values containing the given string.
-  """
-  text_contains: String
-  """
-  All values not containing the given string.
-  """
-  text_not_contains: String
-  """
-  All values starting with the given string.
-  """
-  text_starts_with: String
-  """
-  All values not starting with the given string.
-  """
-  text_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
-  text_ends_with: String
-  """
-  All values not ending with the given string.
-  """
-  text_not_ends_with: String
-  author: UserWhereInput
+  alias_not_ends_with: String
+  guestList_every: UserWhereInput
+  guestList_some: UserWhereInput
+  guestList_none: UserWhereInput
 }
 
-input PostWhereUniqueInput {
+input RestaurantWhereUniqueInput {
   id: ID
-}
-
-type Query {
-  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  post(where: PostWhereUniqueInput!): Post
-  user(where: UserWhereUniqueInput!): User
-  postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
-  """
-  Fetches an object given its ID
-  """
-  node("""
-  The ID of an object
-  """
-  id: ID!): Node
+  alias: String
 }
 
 type Subscription {
-  post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
+  restaurant(where: RestaurantSubscriptionWhereInput): RestaurantSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
@@ -521,15 +386,15 @@ input UserCreateInput {
   email: String!
   password: String!
   name: String!
-  posts: PostCreateManyWithoutAuthorInput
+  restaurantList: RestaurantCreateManyWithoutGuestListInput
 }
 
-input UserCreateOneWithoutPostsInput {
-  create: UserCreateWithoutPostsInput
-  connect: UserWhereUniqueInput
+input UserCreateManyWithoutRestaurantListInput {
+  create: [UserCreateWithoutRestaurantListInput!]
+  connect: [UserWhereUniqueInput!]
 }
 
-input UserCreateWithoutPostsInput {
+input UserCreateWithoutRestaurantListInput {
   email: String!
   password: String!
   name: String!
@@ -610,26 +475,33 @@ input UserUpdateInput {
   email: String
   password: String
   name: String
-  posts: PostUpdateManyWithoutAuthorInput
+  restaurantList: RestaurantUpdateManyWithoutGuestListInput
 }
 
-input UserUpdateOneWithoutPostsInput {
-  create: UserCreateWithoutPostsInput
-  connect: UserWhereUniqueInput
-  delete: Boolean
-  update: UserUpdateWithoutPostsDataInput
-  upsert: UserUpsertWithoutPostsInput
+input UserUpdateManyWithoutRestaurantListInput {
+  create: [UserCreateWithoutRestaurantListInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutRestaurantListInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutRestaurantListInput!]
 }
 
-input UserUpdateWithoutPostsDataInput {
+input UserUpdateWithoutRestaurantListDataInput {
   email: String
   password: String
   name: String
 }
 
-input UserUpsertWithoutPostsInput {
-  update: UserUpdateWithoutPostsDataInput!
-  create: UserCreateWithoutPostsInput!
+input UserUpdateWithWhereUniqueWithoutRestaurantListInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutRestaurantListDataInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutRestaurantListInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutRestaurantListDataInput!
+  create: UserCreateWithoutRestaurantListInput!
 }
 
 input UserWhereInput {
@@ -853,9 +725,9 @@ input UserWhereInput {
   All values not ending with the given string.
   """
   name_not_ends_with: String
-  posts_every: PostWhereInput
-  posts_some: PostWhereInput
-  posts_none: PostWhereInput
+  restaurantList_every: RestaurantWhereInput
+  restaurantList_some: RestaurantWhereInput
+  restaurantList_none: RestaurantWhereInput
 }
 
 input UserWhereUniqueInput {

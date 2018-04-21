@@ -1,31 +1,20 @@
-const { getUserId } = require('../utils')
+const { getUserId, asyncYelpSearch, asyncYelpReview } = require('../utils');
 
 const Query = {
-  feed(parent, args, ctx, info) {
-    return ctx.db.query.posts({ where: { isPublished: true } }, info)
-  },
+  me: (parent, args, ctx, info) =>
+    ctx.db.query.user({ where: { id: getUserId(ctx) } }, info),
 
-  drafts(parent, args, ctx, info) {
-    const id = getUserId(ctx)
+  yelpSearch: (_, { location }) => asyncYelpSearch(location),
 
-    const where = {
-      isPublished: false,
-      author: {
-        id
-      }
-    }
+  yelpReview: (_, { alias }) => asyncYelpReview(alias),
 
-    return ctx.db.query.posts({ where }, info)
-  },
+  userList: (parent, args, ctx, info) => ctx.db.query.users({}, info),
 
-  post(parent, { id }, ctx, info) {
-    return ctx.db.query.post({ where: { id } }, info)
-  },
+  restaurantList: (parent, args, ctx, info) =>
+    ctx.db.query.restaurants({}, info),
 
-  me(parent, args, ctx, info) {
-    const id = getUserId(ctx)
-    return ctx.db.query.user({ where: { id } }, info)
-  },
-}
+  restaurant: (parent, { alias }, ctx, info) =>
+    ctx.db.query.restaurant({ where: { alias } }, info),
+};
 
-module.exports = { Query }
+module.exports = { Query };

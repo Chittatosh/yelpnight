@@ -31,6 +31,15 @@
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
 
+"@tonybadguy/call-me-maybe@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@tonybadguy/call-me-maybe/-/call-me-maybe-2.0.1.tgz#233267eb0a1625c2f5954f27af364b4a29c6e344"
+  dependencies:
+    caseless "^0.11.0"
+    error "^7.0.2"
+    small-request "^2.0.2"
+    string-template "^1.0.0"
+
 "@types/async@2.0.47":
   version "2.0.47"
   resolved "https://registry.yarnpkg.com/@types/async/-/async-2.0.47.tgz#f49ba1dd1f189486beb6e1d070a850f6ab4bd521"
@@ -1715,6 +1724,10 @@ cardinal@^1.0.0:
   dependencies:
     ansicolors "~0.2.1"
     redeyed "~1.0.0"
+
+caseless@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.11.0.tgz#715b96ea9841593cc33067923f5ec60ebda4f7d7"
 
 caseless@~0.12.0:
   version "0.12.0"
@@ -6919,6 +6932,12 @@ replaceall@^0.1.6:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/replaceall/-/replaceall-0.1.6.tgz#81d81ac7aeb72d7f5c4942adf2697a3220688d8e"
 
+request-function@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/request-function/-/request-function-2.0.0.tgz#27aace27f871e3c2fd48a19dad75ca384c4b8654"
+  dependencies:
+    error "^7.0.2"
+
 request-promise-core@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/request-promise-core/-/request-promise-core-1.1.1.tgz#3eee00b2c5aa83239cfb04c5700da36f81cd08b6"
@@ -7367,6 +7386,12 @@ slide@^1.1.5:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/slide/-/slide-1.1.6.tgz#56eb027d65b4d2dce6cb2e2d32c4d4afc9e1d707"
 
+small-request@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/small-request/-/small-request-2.0.2.tgz#a44ba8d86fa2de24c168085268c567f885030653"
+  dependencies:
+    request-function "^2.0.0"
+
 snapdragon-node@^2.0.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/snapdragon-node/-/snapdragon-node-2.1.1.tgz#6c175f86ff14bdb0724563e8f3c1b021a286853b"
@@ -7635,6 +7660,10 @@ string-similarity@^1.2.0:
   resolved "https://registry.yarnpkg.com/string-similarity/-/string-similarity-1.2.0.tgz#d75153cb383846318b7a39a8d9292bb4db4e9c30"
   dependencies:
     lodash "^4.13.1"
+
+string-template@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/string-template/-/string-template-1.0.0.tgz#9e9f2233dc00f218718ec379a28a5673ecca8b96"
 
 string-template@~0.2.1:
   version "0.2.1"
@@ -8662,6 +8691,12 @@ yauzl@^2.4.2:
   dependencies:
     buffer-crc32 "~0.2.3"
     fd-slicer "~1.0.1"
+
+yelp-fusion@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/yelp-fusion/-/yelp-fusion-2.0.3.tgz#701ef2c902eac8cf4b2ba53dd952a70d878244f8"
+  dependencies:
+    "@tonybadguy/call-me-maybe" "^2.0.1"
 
 yeoman-environment@^2.0.0, yeoman-environment@^2.0.5:
   version "2.0.6"

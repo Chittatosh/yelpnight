@@ -1,32 +1,36 @@
-# import Post from "./generated/prisma.graphql"
+# import Restaurant from "./generated/prisma.graphql"
+
+type YelpSearch {
+  alias: String!
+  name: String!
+  address: String!
+}
 
 type Query {
-  feed: [Post!]!
-  drafts: [Post!]!
-  post(id: ID!): Post
   me: User
+  yelpSearch(location: String!): [YelpSearch!]!
+  yelpReview(alias: String!): String!
+  userList: [User!]!
+  restaurantList: [Restaurant!]!
+  restaurant(alias: String!): Restaurant!
 }
 
 type Mutation {
   signup(email: String!, password: String!, name: String!): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
-  createDraft(title: String!, text: String!): Post!
-  publish(id: ID!): Post!
-  deletePost(id: ID!): Post!
-}
-
-type Subscription {
-  feedSubscription: PostSubscriptionPayload!
-}
-
-type AuthPayload {
-  token: String!
-  user: User!
+  addRestaurant(alias: String!): Restaurant!
+  addMeToRestaurant(alias: String!): Restaurant!
+  removeMeFromRestaurant(alias: String!): Restaurant!
 }
 
 type User {
   id: ID!
   email: String!
   name: String!
-  posts: [Post!]!
+  restaurantList: [Restaurant!]!
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
 }
