@@ -1,24 +1,19 @@
-import React from 'react';
-import { gql } from 'apollo-boost';
-import { Query } from 'react-apollo';
+import React, { Fragment } from 'react';
+import { Switch, Route } from 'react-router-dom';
 
-const GET_FEED = gql`
-  query {
-    feed {
-      title
-    }
-  }
-`;
+import YelpSearchQuery from './YelpSearchQuery';
+import Navbar from './Navbar';
+import AuthMutation from './AuthMutation';
 
 const App = () => (
-  <Query query={GET_FEED}>
-    {({ loading, error, data }) => {
-      if (loading) return <div>Loading...</div>;
-      if (error) return <div>Error :(</div>;
-
-      return <div>{data.feed[1].title}</div>;
-    }}
-  </Query>
+  <Fragment>
+    <Navbar />
+    <Switch>
+      <Route exact path="/" component={YelpSearchQuery} />
+      <Route exact path="/signin" component={AuthMutation} />
+      <Route exact path="/createaccount" component={AuthMutation} />
+    </Switch>
+  </Fragment>
 );
 
 export default App;

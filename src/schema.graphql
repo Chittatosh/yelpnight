@@ -7,7 +7,7 @@ type YelpSearch {
 }
 
 type Query {
-  me: User
+  me: User!
   yelpSearch(location: String!): [YelpSearch!]!
   yelpReview(alias: String!): String!
   userList: [User!]!

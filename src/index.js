@@ -29,7 +29,7 @@ const app = server.express;
 app.use((req, res, next) => logreq(req, next, '36'));
 app.use(express.static('dist'));
 
-app.get('/', (req, res) => res.send(htmlString));
+app.get(['/', '/signin', '/createaccount'], (req, res) => res.send(htmlString));
 
 const options = {
   endpoint: '/graphql',
