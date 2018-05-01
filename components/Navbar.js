@@ -1,10 +1,10 @@
 import React from 'react';
 
 import NavLinksHome from './NavLinksHome';
-import MeQuery from './MeQuery';
+import MyNameQuery from './MyNameQuery';
 
 const Navbar = () => (
-  <nav className="navbar navbar-expand-sm navbar-light bg-light">
+  <nav className="navbar navbar-expand-sm navbar-light bg-light mb-2">
     <NavLinksHome />
     <button
       className="navbar-toggler"
@@ -20,7 +20,7 @@ const Navbar = () => (
 
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav ml-auto">
-        <MeQuery />
+        <MyNameQuery />
       </ul>
     </div>
   </nav>

@@ -3,21 +3,29 @@
 type YelpSearch {
   alias: String!
   name: String!
+  imageUrl: String!
   address: String!
+  url: String!
+}
+
+type YelpReview {
+  review: String!
+  reviewer: String!
 }
 
 type Query {
   me: User!
   yelpSearch(location: String!): [YelpSearch!]!
-  yelpReview(alias: String!): String!
+  yelpReview(alias: String!): YelpReview!
   userList: [User!]!
   restaurantList: [Restaurant!]!
-  restaurant(alias: String!): Restaurant!
+  restaurant(alias: String!): Restaurant
 }
 
 type Mutation {
   signup(email: String!, password: String!, name: String!): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
+  updateMyLocation(location: String!): User!
   addRestaurant(alias: String!): Restaurant!
   addMeToRestaurant(alias: String!): Restaurant!
   removeMeFromRestaurant(alias: String!): Restaurant!
@@ -27,6 +35,7 @@ type User {
   id: ID!
   email: String!
   name: String!
+  location: String
   restaurantList: [Restaurant!]!
 }
 

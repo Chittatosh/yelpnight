@@ -15,7 +15,7 @@
     "fullstackdev": "npm-run-all --parallel serverdev clientdev",
     "playground": "graphql playground",
     "graphqldev": "npm-run-all --parallel serverdev playground",
-    "wpstats": "webpack --json > client/wpstats.json"
+    "wpstats": "webpack --json > logs/wpstats.json"
   },
   "dependencies": {
     "apollo-boost": "^0.1.4",

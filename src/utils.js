@@ -34,11 +34,16 @@ const asyncYelpSearch = async location => {
     categories: 'nightlife',
     location,
   });
-  const yelpSearchList = businesses.map(business => ({
-    alias: business.alias,
-    name: business.name,
-    address: business.location.display_address.join(', '),
-  }));
+  const yelpSearchList = businesses.map(
+    /* eslint-disable-next-line camelcase */
+    ({ alias, name, image_url, url, location: { display_address } }) => ({
+      alias,
+      name,
+      imageUrl: image_url,
+      url,
+      address: display_address.join(', '),
+    }),
+  );
   return yelpSearchList;
 };
 
@@ -46,7 +51,10 @@ const asyncYelpReview = async alias => {
   const {
     jsonBody: { reviews },
   } = await yelpClient.reviews(alias);
-  return reviews[0].text;
+  return {
+    review: (reviews[0] && reviews[0].text) || `${'.'.repeat(100)} ${'.'.repeat(100)}`,
+    reviewer: (reviews[0] && reviews[0].user && reviews[0].user.name) || '',
+  };
 };
 /* ************************************************************* */
 

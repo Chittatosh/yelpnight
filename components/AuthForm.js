@@ -56,7 +56,7 @@ class AuthForm extends Component {
       <div className="card">
         <div className="card-body">
           {loading && (
-            <p className="text-light bg-dark text-center mt-3">Loading...</p>
+            <p className="text-light bg-dark text-center mt-3">Fetching...</p>
           )}
           {errorMessage && (
             <p className="text-light bg-danger text-center mt-3">

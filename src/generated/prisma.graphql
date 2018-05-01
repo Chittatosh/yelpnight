@@ -16,6 +16,7 @@ type User implements Node {
   email: String!
   password: String!
   name: String!
+  location: String
   restaurantList(where: RestaurantWhereInput, orderBy: RestaurantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Restaurant!]
 }
 
@@ -190,6 +191,10 @@ input RestaurantSubscriptionWhereInput {
   """
   OR: [RestaurantSubscriptionWhereInput!]
   """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [RestaurantSubscriptionWhereInput!]
+  """
   The subscription event gets dispatched when it's listed in mutation_in
   """
   mutation_in: [MutationType!]
@@ -246,6 +251,10 @@ input RestaurantWhereInput {
   Logical OR on all given filters.
   """
   OR: [RestaurantWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [RestaurantWhereInput!]
   id: ID
   """
   All values that are not equal to given value.
@@ -386,6 +395,7 @@ input UserCreateInput {
   email: String!
   password: String!
   name: String!
+  location: String
   restaurantList: RestaurantCreateManyWithoutGuestListInput
 }
 
@@ -398,6 +408,7 @@ input UserCreateWithoutRestaurantListInput {
   email: String!
   password: String!
   name: String!
+  location: String
 }
 
 """
@@ -423,6 +434,8 @@ enum UserOrderByInput {
   password_DESC
   name_ASC
   name_DESC
+  location_ASC
+  location_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -434,6 +447,7 @@ type UserPreviousValues {
   email: String!
   password: String!
   name: String!
+  location: String
 }
 
 type UserSubscriptionPayload {
@@ -452,6 +466,10 @@ input UserSubscriptionWhereInput {
   Logical OR on all given filters.
   """
   OR: [UserSubscriptionWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [UserSubscriptionWhereInput!]
   """
   The subscription event gets dispatched when it's listed in mutation_in
   """
@@ -475,6 +493,7 @@ input UserUpdateInput {
   email: String
   password: String
   name: String
+  location: String
   restaurantList: RestaurantUpdateManyWithoutGuestListInput
 }
 
@@ -491,6 +510,7 @@ input UserUpdateWithoutRestaurantListDataInput {
   email: String
   password: String
   name: String
+  location: String
 }
 
 input UserUpdateWithWhereUniqueWithoutRestaurantListInput {
@@ -513,6 +533,10 @@ input UserWhereInput {
   Logical OR on all given filters.
   """
   OR: [UserWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [UserWhereInput!]
   id: ID
   """
   All values that are not equal to given value.
@@ -725,6 +749,59 @@ input UserWhereInput {
   All values not ending with the given string.
   """
   name_not_ends_with: String
+  location: String
+  """
+  All values that are not equal to given value.
+  """
+  location_not: String
+  """
+  All values that are contained in given list.
+  """
+  location_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  location_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  location_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  location_lte: String
+  """
+  All values greater than the given value.
+  """
+  location_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  location_gte: String
+  """
+  All values containing the given string.
+  """
+  location_contains: String
+  """
+  All values not containing the given string.
+  """
+  location_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  location_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  location_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  location_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  location_not_ends_with: String
   restaurantList_every: RestaurantWhereInput
   restaurantList_some: RestaurantWhereInput
   restaurantList_none: RestaurantWhereInput

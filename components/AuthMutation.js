@@ -3,8 +3,8 @@ import { gql } from 'apollo-boost';
 import { Mutation } from 'react-apollo';
 import PropTypes from 'prop-types';
 
-import { ME_QUERY } from './MeQuery';
 import AuthForm from './AuthForm';
+import { USER_FIELDS, ME_QUERY } from '../client/constants';
 
 const propTypes = {
   location: PropTypes.shape({
@@ -23,12 +23,7 @@ const AuthMutation = ({ location: { pathname } }) => {
         mutation ${field}(${nameVar} $email: String!, $password: String!) {
           ${field}(${nameArg} email: $email, password: $password) {
             token
-            user {
-              name
-              restaurantList {
-                alias
-              }
-            }
+            user ${USER_FIELDS}
           }
         }
       `}

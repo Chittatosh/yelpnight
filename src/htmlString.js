@@ -1,4 +1,5 @@
 const { jsUrl } = require('./utils');
+const initialHtml = require('./initialHtml');
 
 const htmlString = `<!doctype html>
   <html class="no-js" lang="en">
@@ -14,7 +15,7 @@ const htmlString = `<!doctype html>
       <link rel="shortcut icon" type="image/png" href="https://res.cloudinary.com/fbnt/image/upload/c_scale,w_16/v1523968294/yelpnight_yqhrq4.png"/>
     </head>
     <body class="container">
-      <div id="root">Root Element</div>
+      <div id="root">${initialHtml}</div>
       <script src="${jsUrl}"></script>
     </body>
     <footer>

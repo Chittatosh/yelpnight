@@ -9,5 +9,6 @@ type User {
   email: String! @unique
   password: String!
   name: String!
+  location: String
   restaurantList: [Restaurant!]!
 }

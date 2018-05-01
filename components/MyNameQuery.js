@@ -1,11 +1,10 @@
 import React, { Component, Fragment } from 'react';
-import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 
-import { AUTH_TOKEN } from '../client/constants';
 import NavLinksAuth from './NavLinksAuth';
+import { AUTH_TOKEN, ME_QUERY } from '../client/constants';
 
 const propTypes = {
   history: PropTypes.shape({
@@ -13,18 +12,7 @@ const propTypes = {
   }).isRequired,
 };
 
-const ME_QUERY = gql`
-  query {
-    me {
-      name
-      restaurantList {
-        alias
-      }
-    }
-  }
-`;
-
-class MeQuery extends Component {
+class MyNameQuery extends Component {
   constructor(props) {
     super(props);
     this.handleSignOut = () => {
@@ -37,12 +25,13 @@ class MeQuery extends Component {
     return authToken ? (
       <Query query={ME_QUERY}>
         {({ loading, error, data }) => {
-          if (loading) return <div>Loading...</div>;
+          if (loading) return <div>Fetching...</div>;
           if (error) return <div>Error!</div>;
           return (
             <Fragment>
               <span className="navbar-text text-dark ml-3">
-                Hello, {data.me.name}!
+                Hello, {data.me.name}{' '}
+                {data.me.location && `@${data.me.location}`}!
               </span>
               <button
                 type="button"
@@ -61,7 +50,6 @@ class MeQuery extends Component {
   }
 }
 
-MeQuery.propTypes = propTypes;
+MyNameQuery.propTypes = propTypes;
 
-export { ME_QUERY };
-export default withRouter(MeQuery);
+export default withRouter(MyNameQuery);
