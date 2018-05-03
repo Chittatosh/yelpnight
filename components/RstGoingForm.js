@@ -29,7 +29,7 @@ class RstGoingForm extends Component {
             checked={checked}
             onChange={this.handleCheckboxChange}
           />{' '}
-          I&apos;m Going Here
+          I&apos;m Going Here <i className="fas fa-utensils" />
         </label>
       </form>
     );

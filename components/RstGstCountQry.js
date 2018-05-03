@@ -24,10 +24,11 @@ const RstGstCountQry = ({ alias }) => (
       return (
         Boolean(guestCount) && (
           <h4>
-            <span className="badge badge-primary badge-pill">{guestCount}</span>
+            <span className="badge badge-dark badge-pill">{guestCount}</span>
             <span className="h5">
-              {guestCount === 1 ? ' Guest' : ' Guests'}
+              {guestCount === 1 ? ' Guest ' : ' Guests '}
             </span>
+            <i className="fas fa-users" />
           </h4>
         )
       );

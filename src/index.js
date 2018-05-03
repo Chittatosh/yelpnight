@@ -20,13 +20,7 @@ const server = new GraphQLServer({
     }), // Values are set in .env
   }),
 });
-
-const logreq = (req, next, color) => {
-  console.log(`\x1b[${color}m%s\x1b[0m`, req.url);
-  next();
-};
 const app = server.express;
-app.use((req, res, next) => logreq(req, next, '36'));
 app.use(express.static('dist'));
 
 app.get(['/', '/signin', '/createaccount'], (req, res) => res.send(htmlString));
@@ -38,5 +32,3 @@ const options = {
 server.start(options, ({ port }) =>
   console.log(`Server is running on http://localhost:${port}`),
 );
-
-app.use((req, res, next) => logreq(req, next, '31'));

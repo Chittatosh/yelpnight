@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import YelpSearchQuery from './YelpSearchQuery';
+import { LoadingAlert, ErrorAlert } from './BsAlerts';
 
 const propTypes = {
   location: PropTypes.string,
@@ -41,29 +42,14 @@ class YelpSearchForm extends Component {
     return (
       <Fragment>
         <form onSubmit={this.handleSubmit}>
-          {loading && (
-            <p className="text-light bg-dark text-center">
-              Saving your location...
-            </p>
-          )}
-          {errorMessage && (
-            <p className="text-light bg-danger text-center">{errorMessage}</p>
-          )}
+          {loading && <LoadingAlert text="Saving your location..." />}
+          {errorMessage && <ErrorAlert text={errorMessage} />}
           <div className="form-group row d-flex align-items-center">
             {/* eslint-disable-next-line jsx-a11y/label-has-for */}
             <label htmlFor="yelpSearch" className="col-sm-2 col-form-label">
               My Location:
             </label>
             <div className="col-sm-10 input-group">
-              <span className="input-group-prepend">
-                <button
-                  type="submit"
-                  className="btn btn-secondary"
-                  disabled={!inputTerm}
-                >
-                  <i className="fas fa-search" />
-                </button>
-              </span>
               <input
                 type="text"
                 className="form-control"
@@ -73,6 +59,16 @@ class YelpSearchForm extends Component {
                 value={inputTerm}
                 onChange={this.handleChange}
               />
+              <span className="input-group-append">
+                <button
+                  type="submit"
+                  className="btn btn-secondary"
+                  aria-label="Submit search term"
+                  disabled={!inputTerm}
+                >
+                  Search <i className="fas fa-search" />
+                </button>
+              </span>
             </div>
           </div>
         </form>

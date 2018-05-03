@@ -52,7 +52,9 @@ const asyncYelpReview = async alias => {
     jsonBody: { reviews },
   } = await yelpClient.reviews(alias);
   return {
-    review: (reviews[0] && reviews[0].text) || `${'.'.repeat(100)} ${'.'.repeat(100)}`,
+    review:
+      (reviews[0] && reviews[0].text) ||
+      `${'.'.repeat(100)} ${'.'.repeat(100)}`,
     reviewer: (reviews[0] && reviews[0].user && reviews[0].user.name) || '',
   };
 };

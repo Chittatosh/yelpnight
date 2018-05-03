@@ -25,8 +25,8 @@ const Restaurant = ({ alias, name, imageUrl, url, address }) => (
       </div>
       <div className="d-flex justify-content-between">
         <h5 className="mb-1">{address}</h5>
-        <a href={url} className="ml-5">
-          more on yelp.com
+        <a href={url} className="ml-5 text-dark">
+          <u>More info</u> <i className="fas fa-external-link-alt" />
         </a>
       </div>
       <ReviewQuery {...{ alias }} />

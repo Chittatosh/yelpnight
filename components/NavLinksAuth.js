@@ -10,7 +10,7 @@ const NavLinksAuth = () => (
       to="/createaccount"
       title="Create an Account"
     >
-      Create an Account
+      Create an Account <i className="fas fa-user" />
     </NavLink>
     <NavLink
       className="btn btn-primary ml-3"
@@ -19,7 +19,7 @@ const NavLinksAuth = () => (
       to="/signin"
       title="Sign In"
     >
-      Sign In
+      Sign In <i className="fas fa-sign-in-alt" />
     </NavLink>
   </Fragment>
 );

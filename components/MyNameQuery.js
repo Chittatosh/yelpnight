@@ -25,8 +25,8 @@ class MyNameQuery extends Component {
     return authToken ? (
       <Query query={ME_QUERY}>
         {({ loading, error, data }) => {
-          if (loading) return <div>Fetching...</div>;
-          if (error) return <div>Error!</div>;
+          if (loading) return <div>Fetching Your Name...</div>;
+          if (error) return <div className="text-danger">{error.message}</div>;
           return (
             <Fragment>
               <span className="navbar-text text-dark ml-3">
@@ -38,7 +38,7 @@ class MyNameQuery extends Component {
                 className="btn btn-info ml-3"
                 onClick={this.handleSignOut}
               >
-                Sign Out
+                Sign Out <i className="fas fa-sign-out-alt" />
               </button>
             </Fragment>
           );

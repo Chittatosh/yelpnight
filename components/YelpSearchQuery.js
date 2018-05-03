@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost';
 import PropTypes from 'prop-types';
 
 import Restaurant from './Restaurant';
+import { LoadingAlert, ErrorAlert } from './BsAlerts';
 
 const propTypes = {
   searchTerm: PropTypes.string.isRequired,
@@ -23,25 +24,20 @@ const YelpSearchQuery = ({ searchTerm }) => (
       }
     `}
   >
-    {({ loading, error, data }) => {
-      if (loading) {
-        return (
-          <p className="text-light bg-dark text-center">Searching Yelp...</p>
-        );
-      }
-      if (error) {
-        return (
-          <p className="text-light bg-danger text-center">{error.message}</p>
-        );
-      }
-      return (
-        <ul className="list-group">
-          {data.yelpSearch.map(restaurant => (
-            <Restaurant {...restaurant} key={restaurant.alias} />
-          ))}
-        </ul>
-      );
-    }}
+    {({ loading, error, data }) => (
+      <Fragment>
+        {loading && <LoadingAlert text="Searching Yelp..." />}
+        {error && <ErrorAlert text={error.message} />}
+        {data &&
+          data.yelpSearch && (
+            <ul className="list-group">
+              {data.yelpSearch.map(restaurant => (
+                <Restaurant {...restaurant} key={restaurant.alias} />
+              ))}
+            </ul>
+          )}
+      </Fragment>
+    )}
   </Query>
 );
 

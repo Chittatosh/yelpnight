@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 
 import { AUTH_TOKEN } from '../client/constants';
+import { LoadingAlert, ErrorAlert } from './BsAlerts';
 
 const propTypes = {
   signupBool: PropTypes.bool.isRequired,
@@ -55,14 +56,8 @@ class AuthForm extends Component {
     return (
       <div className="card">
         <div className="card-body">
-          {loading && (
-            <p className="text-light bg-dark text-center mt-3">Fetching...</p>
-          )}
-          {errorMessage && (
-            <p className="text-light bg-danger text-center mt-3">
-              {errorMessage}
-            </p>
-          )}
+          {loading && <LoadingAlert text="Signing in..." />}
+          {errorMessage && <ErrorAlert text={errorMessage} />}
           {token && (
             <p className="text-light bg-success text-center mt-3">
               Login Successful!
@@ -70,7 +65,12 @@ class AuthForm extends Component {
           )}
           <form onSubmit={this.handleSubmit}>
             <h2 className="mb-3">
-              {signupBool ? 'Create an Account' : 'Sign In'}
+              {signupBool ? 'Create an Account ' : 'Sign In '}
+              {signupBool ? (
+                <i className="fas fa-user" />
+              ) : (
+                <i className="fas fa-sign-in-alt" />
+              )}
             </h2>
             {signupBool && (
               <div className="form-group">

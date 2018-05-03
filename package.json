@@ -8,14 +8,13 @@
   "license": "MIT",
   "scripts": {
     "start": "node src/index.js",
-    "buildprod": "webpack",
+    "buildprod": "webpack --json > logs/wpstats.json",
     "serverprod": "set NODE_ENV=production && node -r dotenv/config src",
     "serverdev": "nodemon -e js,graphql --watch src -r dotenv/config",
     "clientdev": "webpack-dev-server --config ./client.webpack.config.js",
     "fullstackdev": "npm-run-all --parallel serverdev clientdev",
     "playground": "graphql playground",
-    "graphqldev": "npm-run-all --parallel serverdev playground",
-    "wpstats": "webpack --json > logs/wpstats.json"
+    "graphqldev": "npm-run-all --parallel serverdev playground"
   },
   "dependencies": {
     "apollo-boost": "^0.1.4",
